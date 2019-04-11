@@ -7,8 +7,8 @@
     <ProjectGuid>{A2B4319D-F5CB-4A4F-A070-308CEE3ECA75}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EkipUyesiDegistirForm</RootNamespace>
-    <AssemblyName>EkipUyesiDegistirForm</AssemblyName>
+    <RootNamespace>UpdateListItem</RootNamespace>
+    <AssemblyName>UpdateListItem</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,10 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SharePoint.Client">
-      <HintPath>..\EkipUyesiDegistir\DLL\Microsoft.SharePoint.Client.dll</HintPath>
+      <HintPath>..\UpdateListItem\DLL\Microsoft.SharePoint.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client.Runtime">
-      <HintPath>..\EkipUyesiDegistir\DLL\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
+      <HintPath>..\UpdateListItem\DLL\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

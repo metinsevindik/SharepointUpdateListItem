@@ -1,8 +1,0 @@
-E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\EkipUyesiDegistir\bin\Debug\EkipUyesiDegistir.exe.config
-E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\EkipUyesiDegistir\bin\Debug\EkipUyesiDegistir.exe
-E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\EkipUyesiDegistir\bin\Debug\EkipUyesiDegistir.pdb
-E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\EkipUyesiDegistir\bin\Debug\Microsoft.SharePoint.Client.dll
-E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\EkipUyesiDegistir\bin\Debug\Microsoft.SharePoint.Client.Runtime.dll
-E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\EkipUyesiDegistir\obj\Debug\EkipUyesiDegistir.csprojResolveAssemblyReference.cache
-E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\EkipUyesiDegistir\obj\Debug\EkipUyesiDegistir.exe
-E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\EkipUyesiDegistir\obj\Debug\EkipUyesiDegistir.pdb
