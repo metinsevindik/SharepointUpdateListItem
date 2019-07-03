@@ -11,3 +11,4 @@ E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\SharepointU
 E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\SharepointUpdateListItem\UpdateListItem\obj\Debug\SharepointUpdateListItem.csproj.GenerateResource.Cache
 E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\SharepointUpdateListItem\UpdateListItem\obj\Debug\UpdateListItem.exe
 E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\SharepointUpdateListItem\UpdateListItem\obj\Debug\UpdateListItem.pdb
+E:\UserFiles\Documents\Visual Studio 2012\Projects\EkipUyesiDegistir\SharepointUpdateListItem\UpdateListItem\bin\Debug\Newtonsoft.Json.dll
