@@ -33,8 +33,9 @@ namespace EkipUyesiDegistirForm
                 string.IsNullOrWhiteSpace(pass.Text) ||
                 string.IsNullOrWhiteSpace(domain.Text) ||
                 string.IsNullOrWhiteSpace(listname.Text) ||
-                string.IsNullOrWhiteSpace(SearchFieldValueTxt.Text) ||
-                string.IsNullOrWhiteSpace(SearchFieldName.Text) ||
+                (useCAMLQuery.Checked == false && string.IsNullOrWhiteSpace(SearchFieldValueTxt.Text)) ||
+                (useCAMLQuery.Checked == false && string.IsNullOrWhiteSpace(SearchFieldName.Text)) ||
+                (useCAMLQuery.Checked == true && string.IsNullOrWhiteSpace(camlqueryTxt.Text)) ||
                 string.IsNullOrWhiteSpace(ReplaceFieldName.Text) ||
                 string.IsNullOrWhiteSpace(ReplaceFieldValue.Text))
             {
@@ -51,12 +52,19 @@ namespace EkipUyesiDegistirForm
         {
             try
             {
-                string datefirst=DateTime.Now.ToString("yyyy.MM.dd hh:mm:ss");
+                string datefirst = DateTime.Now.ToString("yyyy.MM.dd hh:mm:ss");
                 SP.List oList = clientContext.Web.Lists.GetByTitle(listname.Text);
                 SP.CamlQuery camlQuery = new SP.CamlQuery();
-                camlQuery.ViewXml = @"<View>" +
-                    "<Query> <Where><BeginsWith><FieldRef Name='" + SearchFieldName.Text + "' /><Value Type='Text'>" + SearchFieldValueTxt.Text + "</Value></BeginsWith></Where><OrderBy><FieldRef Name='ID' /></OrderBy>  </Query>" +
-                "</View>";
+                if (useCAMLQuery.Checked)
+                {
+                    camlQuery.ViewXml = camlqueryTxt.Text;
+                }
+                else
+                {
+                    camlQuery.ViewXml = @"<View>" +
+                        "<Query> <Where><BeginsWith><FieldRef Name='" + SearchFieldName.Text + "' /><Value Type='Text'>" + SearchFieldValueTxt.Text + "</Value></BeginsWith></Where><OrderBy><FieldRef Name='ID' /></OrderBy>  </Query>" +
+                    "</View>";
+                }
                 SP.ListItemCollection collListItem = oList.GetItems(camlQuery);
                 oList.EnableVersioning = true;
                 clientContext.Load(collListItem);
@@ -77,9 +85,9 @@ namespace EkipUyesiDegistirForm
         }
 
 
-        private void LoadSetting()
+        private void LoadSetting(string path)
         {
-            var str = File.ReadAllText(setFileName);
+            var str = File.ReadAllText(path);
             var set = JsonConvert.DeserializeObject<setting>(str);
             domain.Text = set.domain;
             listname.Text = set.listname;
@@ -89,6 +97,8 @@ namespace EkipUyesiDegistirForm
             SearchFieldValueTxt.Text = set.searchFieldValue;
             siteurltxt.Text = set.siteURl;
             username.Text = set.username;
+            camlqueryTxt.Text = set.camlquery;
+            useCAMLQuery.Checked = set.usecamlquery;
         }
 
         class setting
@@ -101,9 +111,11 @@ namespace EkipUyesiDegistirForm
             public string searchFieldValue { get; set; }
             public string ReplaceFieldName { get; set; }
             public string ReplaceFieldValue { get; set; }
+            public string camlquery { get; set; }
+            public bool usecamlquery { get; set; }
         }
 
-        private void saveSetting()
+        private void saveSetting(string path)
         {
             setting set = new setting();
             set.siteURl = siteurltxt.Text;
@@ -114,19 +126,36 @@ namespace EkipUyesiDegistirForm
             set.ReplaceFieldValue = ReplaceFieldValue.Text;
             set.searchfieldName = SearchFieldName.Text;
             set.searchFieldValue = SearchFieldValueTxt.Text;
+            set.camlquery = camlqueryTxt.Text;
+            set.usecamlquery = useCAMLQuery.Checked;
             var settingStr = JsonConvert.SerializeObject(set);
 
-            File.WriteAllText(setFileName, settingStr);
+            File.WriteAllText(path, settingStr);
         }
 
         private void OpenSettingBtn_Click(object sender, EventArgs e)
         {
-            LoadSetting();
+            DialogResult diaResult = openFileDialog1.ShowDialog(this);
+            if (diaResult == System.Windows.Forms.DialogResult.OK)
+            {
+                LoadSetting(openFileDialog1.FileName.ToString());
+            }
         }
 
         private void saveSettingBtn_Click(object sender, EventArgs e)
         {
-            saveSetting();
+            DialogResult diaResult = saveFileDialog1.ShowDialog(this);
+            if (diaResult == System.Windows.Forms.DialogResult.OK)
+            {
+                saveSetting(saveFileDialog1.FileName.ToString());
+            }
+        }
+
+        private void useCAMLQuery_CheckedChanged(object sender, EventArgs e)
+        {
+            SearchFieldName.Enabled = !useCAMLQuery.Checked;
+            SearchFieldValueTxt.Enabled = !useCAMLQuery.Checked;
+            camlqueryTxt.Enabled = useCAMLQuery.Checked;
         }
     }
 }

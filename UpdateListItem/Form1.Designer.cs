@@ -51,12 +51,16 @@
             this.infolbl = new System.Windows.Forms.Label();
             this.OpenSettingBtn = new System.Windows.Forms.Button();
             this.saveSettingBtn = new System.Windows.Forms.Button();
+            this.useCAMLQuery = new System.Windows.Forms.CheckBox();
+            this.camlqueryTxt = new System.Windows.Forms.TextBox();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // StartBtn
             // 
-            this.StartBtn.Location = new System.Drawing.Point(152, 197);
+            this.StartBtn.Location = new System.Drawing.Point(174, 360);
             this.StartBtn.Margin = new System.Windows.Forms.Padding(2);
             this.StartBtn.Name = "StartBtn";
             this.StartBtn.Size = new System.Drawing.Size(92, 37);
@@ -68,7 +72,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(236, 59);
+            this.label1.Location = new System.Drawing.Point(7, 108);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(137, 13);
@@ -77,15 +81,15 @@
             // 
             // SearchFieldValueTxt
             // 
-            this.SearchFieldValueTxt.Location = new System.Drawing.Point(233, 76);
+            this.SearchFieldValueTxt.Location = new System.Drawing.Point(8, 123);
             this.SearchFieldValueTxt.Margin = new System.Windows.Forms.Padding(2);
             this.SearchFieldValueTxt.Name = "SearchFieldValueTxt";
-            this.SearchFieldValueTxt.Size = new System.Drawing.Size(148, 20);
+            this.SearchFieldValueTxt.Size = new System.Drawing.Size(135, 20);
             this.SearchFieldValueTxt.TabIndex = 2;
             // 
             // ReplaceFieldValue
             // 
-            this.ReplaceFieldValue.Location = new System.Drawing.Point(238, 142);
+            this.ReplaceFieldValue.Location = new System.Drawing.Point(238, 291);
             this.ReplaceFieldValue.Margin = new System.Windows.Forms.Padding(2);
             this.ReplaceFieldValue.Name = "ReplaceFieldValue";
             this.ReplaceFieldValue.Size = new System.Drawing.Size(144, 20);
@@ -94,7 +98,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(236, 126);
+            this.label2.Location = new System.Drawing.Point(236, 275);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 13);
@@ -176,7 +180,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.camlqueryTxt);
+            this.groupBox1.Controls.Add(this.useCAMLQuery);
             this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.infolbl);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
@@ -191,7 +198,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(434, 267);
+            this.groupBox1.Size = new System.Drawing.Size(434, 466);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Update to List item Field By Search";
@@ -199,7 +206,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 126);
+            this.label9.Location = new System.Drawing.Point(8, 276);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(103, 13);
@@ -218,7 +225,7 @@
             // 
             // ReplaceFieldName
             // 
-            this.ReplaceFieldName.Location = new System.Drawing.Point(7, 142);
+            this.ReplaceFieldName.Location = new System.Drawing.Point(7, 291);
             this.ReplaceFieldName.Margin = new System.Windows.Forms.Padding(2);
             this.ReplaceFieldName.Name = "ReplaceFieldName";
             this.ReplaceFieldName.Size = new System.Drawing.Size(136, 20);
@@ -234,7 +241,7 @@
             // 
             // listname
             // 
-            this.listname.Location = new System.Drawing.Point(80, 26);
+            this.listname.Location = new System.Drawing.Point(71, 17);
             this.listname.Margin = new System.Windows.Forms.Padding(2);
             this.listname.Name = "listname";
             this.listname.Size = new System.Drawing.Size(105, 20);
@@ -243,7 +250,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(17, 26);
+            this.label7.Location = new System.Drawing.Point(8, 17);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(54, 13);
@@ -252,7 +259,7 @@
             // 
             // infolbl
             // 
-            this.infolbl.Location = new System.Drawing.Point(38, 378);
+            this.infolbl.Location = new System.Drawing.Point(33, 401);
             this.infolbl.Name = "infolbl";
             this.infolbl.Size = new System.Drawing.Size(377, 53);
             this.infolbl.TabIndex = 6;
@@ -277,14 +284,37 @@
             this.saveSettingBtn.UseVisualStyleBackColor = true;
             this.saveSettingBtn.Click += new System.EventHandler(this.saveSettingBtn_Click);
             // 
+            // useCAMLQuery
+            // 
+            this.useCAMLQuery.AutoSize = true;
+            this.useCAMLQuery.Location = new System.Drawing.Point(120, 42);
+            this.useCAMLQuery.Name = "useCAMLQuery";
+            this.useCAMLQuery.Size = new System.Drawing.Size(108, 17);
+            this.useCAMLQuery.TabIndex = 7;
+            this.useCAMLQuery.Text = "Use CAML Query";
+            this.useCAMLQuery.UseVisualStyleBackColor = true;
+            this.useCAMLQuery.CheckedChanged += new System.EventHandler(this.useCAMLQuery_CheckedChanged);
+            // 
+            // camlqueryTxt
+            // 
+            this.camlqueryTxt.Enabled = false;
+            this.camlqueryTxt.Location = new System.Drawing.Point(157, 59);
+            this.camlqueryTxt.Multiline = true;
+            this.camlqueryTxt.Name = "camlqueryTxt";
+            this.camlqueryTxt.Size = new System.Drawing.Size(272, 204);
+            this.camlqueryTxt.TabIndex = 8;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(459, 440);
+            this.ClientSize = new System.Drawing.Size(459, 570);
             this.Controls.Add(this.saveSettingBtn);
             this.Controls.Add(this.OpenSettingBtn);
-            this.Controls.Add(this.infolbl);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pass);
             this.Controls.Add(this.label5);
@@ -329,6 +359,10 @@
         private System.Windows.Forms.Label infolbl;
         private System.Windows.Forms.Button OpenSettingBtn;
         private System.Windows.Forms.Button saveSettingBtn;
+        private System.Windows.Forms.CheckBox useCAMLQuery;
+        private System.Windows.Forms.TextBox camlqueryTxt;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 
