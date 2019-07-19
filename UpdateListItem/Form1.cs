@@ -12,6 +12,7 @@ using Microsoft.SharePoint;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
+using UpdateListItem;
 
 namespace EkipUyesiDegistirForm
 {
@@ -21,7 +22,6 @@ namespace EkipUyesiDegistirForm
         {
             InitializeComponent();
         }
-
         string setFileName = Application.StartupPath + "\\" + "settings.txt";
         SP.ClientContext clientContext = null;
 
@@ -35,7 +35,7 @@ namespace EkipUyesiDegistirForm
                 string.IsNullOrWhiteSpace(listname.Text) ||
                 (useCAMLQuery.Checked == false && string.IsNullOrWhiteSpace(SearchFieldValueTxt.Text)) ||
                 (useCAMLQuery.Checked == false && string.IsNullOrWhiteSpace(SearchFieldName.Text)) ||
-                (useCAMLQuery.Checked == true && string.IsNullOrWhiteSpace(camlqueryTxt.Text)) ||
+                (useCAMLQuery.Checked == true && string.IsNullOrWhiteSpace(camlQueryText.Text)) ||
                 string.IsNullOrWhiteSpace(ReplaceFieldName.Text) ||
                 string.IsNullOrWhiteSpace(ReplaceFieldValue.Text))
             {
@@ -57,7 +57,7 @@ namespace EkipUyesiDegistirForm
                 SP.CamlQuery camlQuery = new SP.CamlQuery();
                 if (useCAMLQuery.Checked)
                 {
-                    camlQuery.ViewXml = camlqueryTxt.Text;
+                    camlQuery.ViewXml = camlQueryText.Text;
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace EkipUyesiDegistirForm
                     listItem.Update();
                     clientContext.ExecuteQuery();
                 }
-                infolbl.Text = datefirst + " tarihinde başlayan iŞLEM " + DateTime.Now.ToString("yyyy.MM.dd hh:mm:ss") + " TAMAMLANDI";
+                infolbl.Text = "Start Time: " + datefirst + ",\n Finish Time: " + DateTime.Now.ToString("yyyy.MM.dd hh:mm:ss");
             }
             catch (Exception ex)
             {
@@ -97,7 +97,7 @@ namespace EkipUyesiDegistirForm
             SearchFieldValueTxt.Text = set.searchFieldValue;
             siteurltxt.Text = set.siteURl;
             username.Text = set.username;
-            camlqueryTxt.Text = set.camlquery;
+            camlQueryText.Text = set.camlquery;
             useCAMLQuery.Checked = set.usecamlquery;
         }
 
@@ -126,7 +126,7 @@ namespace EkipUyesiDegistirForm
             set.ReplaceFieldValue = ReplaceFieldValue.Text;
             set.searchfieldName = SearchFieldName.Text;
             set.searchFieldValue = SearchFieldValueTxt.Text;
-            set.camlquery = camlqueryTxt.Text;
+            set.camlquery = camlQueryText.Text;
             set.usecamlquery = useCAMLQuery.Checked;
             var settingStr = JsonConvert.SerializeObject(set);
 
@@ -155,7 +155,44 @@ namespace EkipUyesiDegistirForm
         {
             SearchFieldName.Enabled = !useCAMLQuery.Checked;
             SearchFieldValueTxt.Enabled = !useCAMLQuery.Checked;
-            camlqueryTxt.Enabled = useCAMLQuery.Checked;
+            camlQueryText.Enabled = useCAMLQuery.Checked;
+        }
+
+        private void previewBtn_Click(object sender, EventArgs e)
+        {
+            if (
+               string.IsNullOrWhiteSpace(siteurltxt.Text) ||
+               string.IsNullOrWhiteSpace(username.Text) ||
+               string.IsNullOrWhiteSpace(pass.Text) ||
+               string.IsNullOrWhiteSpace(domain.Text) ||
+               string.IsNullOrWhiteSpace(listname.Text) ||
+               (useCAMLQuery.Checked == false && string.IsNullOrWhiteSpace(SearchFieldValueTxt.Text)) ||
+               (useCAMLQuery.Checked == false && string.IsNullOrWhiteSpace(SearchFieldName.Text)) ||
+               (useCAMLQuery.Checked == true && string.IsNullOrWhiteSpace(camlQueryText.Text)) ||
+               string.IsNullOrWhiteSpace(ReplaceFieldName.Text) ||
+               string.IsNullOrWhiteSpace(ReplaceFieldValue.Text))
+            {
+                MessageBox.Show("Fill must all textboxes");
+                return;
+            }
+
+            clientContext = new SP.ClientContext(siteurltxt.Text.Trim());
+            clientContext.Credentials = new NetworkCredential(username.Text, pass.Text, domain.Text);
+            SP.List oList = clientContext.Web.Lists.GetByTitle(listname.Text);
+
+
+
+            SP.CamlQuery camlQuery = new SP.CamlQuery();
+            camlQuery.ViewXml = camlQueryText.Text;
+            SP.ListItemCollection collListItem = oList.GetItems(camlQuery);
+          
+            clientContext.Load(collListItem);
+            clientContext.Load(oList);
+            clientContext.Load(oList.Fields);
+            clientContext.ExecuteQuery();
+
+            Preview preForm = new Preview(collListItem,oList);
+            preForm.Show();
         }
     }
 }
