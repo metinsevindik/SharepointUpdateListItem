@@ -182,8 +182,17 @@ namespace EkipUyesiDegistirForm
 
 
 
-            SP.CamlQuery camlQuery = new SP.CamlQuery();
-            camlQuery.ViewXml = camlQueryText.Text;
+            SP.CamlQuery camlQuery = new SP.CamlQuery(); 
+            if (useCAMLQuery.Checked)
+            {
+                camlQuery.ViewXml = camlQueryText.Text;
+            }
+            else
+            {
+                camlQuery.ViewXml = @"<View>" +
+                    "<Query> <Where><BeginsWith><FieldRef Name='" + SearchFieldName.Text + "' /><Value Type='Text'>" + SearchFieldValueTxt.Text + "</Value></BeginsWith></Where><OrderBy><FieldRef Name='ID' /></OrderBy>  </Query>" +
+                "</View>";
+            }
             SP.ListItemCollection collListItem = oList.GetItems(camlQuery);
           
             clientContext.Load(collListItem);
